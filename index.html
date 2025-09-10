@@ -2,27 +2,34 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Portfolio – Yannis Oukacine | Reconversion Web</title>
+  <title>Portfolio – Yannis Oukacine | Candidat École d’Ingénieur Informatique (Alternance)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio de Yannis Oukacine – Reconversion vers le développement web après des expériences en conformité, relation client et optimisation de process." />
+  <meta name="description" content="Portfolio de Yannis Oukacine – Candidat motivé pour intégrer une école d’ingénieur informatique en alternance : rigueur conformité, sens client, structuration et envie d’apprendre." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://example.com/" />
   <meta property="og:title" content="Portfolio – Yannis Oukacine" />
-  <meta property="og:description" content="De la conformité immobilière à l’ingénierie web : rigueur, sens client, structuration & progression." />
+  <meta property="og:description" content="Objectif : école d’ingénieur informatique en alternance – rigueur, sens client, structuration & progression continue." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://example.com/" />
-  <meta property="og:image" content="https://example.com/og-image.jpg" />
+  <!-- Image / Open Graph -->
+  <meta property="og:image" content="assets/images/profile.jpg" />
+  <meta property="og:image:alt" content="Portrait de Yannis Oukacine" />
   <meta name="twitter:card" content="summary_large_image" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <!-- Favicons basés sur la photo -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#000000" />
   <link rel="stylesheet" href="style.css" />
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Person",
     "name":"Yannis Oukacine",
-    "jobTitle":"Développeur web (reconversion)",
-    "description":"Rigueur conformité & relation client appliquées au développement web.",
+  "jobTitle":"Candidat école d’ingénieur informatique (alternance)",
+  "description":"Rigueur conformité & relation client appliquées à l’ingénierie logicielle en apprentissage.",
     "url":"https://example.com/",
     "sameAs":[
       "https://github.com/yannisoke",
@@ -32,12 +39,12 @@
   </script>
 </head>
 <body data-theme="dark" class="is-preloading">
-<a href="#home" class="skip-link" data-i18n="a11y.skip">Passer au contenu principal</a>
+<a href="#home" class="skip-link">Passer au contenu principal</a>
 
-<!-- PRELOADER -->
+<!-- Animation de chargement (preloader) -->
 <div id="preloader" class="preloader" role="status" aria-live="polite">
   <div class="loader-box">
-    <div class="loader-label" data-i18n="preloader.loading">Chargement...</div>
+  <div class="loader-label">Chargement...</div>
     <div class="progress-shell" aria-hidden="true">
       <div class="progress-bar" id="preloader-bar"></div>
     </div>
@@ -45,359 +52,474 @@
   </div>
 </div>
 
-<!-- Bouton Thème -->
+<!-- Bouton pour changer le thème (clair/sombre) -->
 <button id="modeToggle" class="toggle-btn" type="button" aria-label="Basculer thème">
   <img id="toggleIcon" src="assets/icons/sun.png" alt="Icône thème" width="24" height="24" loading="lazy">
 </button>
 
-<!-- Navigation -->
+<!-- Barre de navigation principale -->
 <nav class="nav" aria-label="Navigation principale">
   <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Ouvrir le menu">
-    <span class="nav-toggle-box">
+    <span class="visually-hidden">Menu</span>
+    <div class="nav-toggle-box">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
-    </span>
+    </div>
   </button>
-  <ul class="links" id="navMenu" data-nav-menu hidden>
-    <li><a href="#home" data-nav data-i18n="nav.home">Accueil</a></li>
-    <li><a href="#about" data-nav data-i18n="nav.about">À propos</a></li>
-    <li><a href="#experience" data-nav data-i18n="nav.experience">Expérience</a></li>
-    <li><a href="#projects" data-nav data-i18n="nav.projects">Projets</a></li>
-    <li><a href="#stack" data-nav data-i18n="nav.stack">Stack</a></li>
-    <li><a href="#education" data-nav data-i18n="nav.education">Parcours</a></li>
-    <li><a href="#value" data-nav data-i18n="nav.value">Valeur</a></li>
-    <li><a href="#contact" data-nav data-i18n="nav.contact">Contact</a></li>
+  <ul class="links" id="navMenu">
+    <li><a href="#home" data-nav>Accueil</a></li>
+    <li><a href="#about" data-nav>À propos</a></li>
+    <li><a href="#experience" data-nav>Expérience</a></li>
+    <li><a href="#projects" data-nav>Projets</a></li>
+    <li><a href="#stack" data-nav>Stack</a></li>
+    <li><a href="#education" data-nav>Parcours</a></li>
+    <li><a href="#value" data-nav>Valeur</a></li>
+    <li><a href="#contact" data-nav>Contact</a></li>
   </ul>
-  <div class="lang-switcher" role="group" aria-label="Language switcher">
-    <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
-    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
-  </div>
+  <a class="btn-outline btn-cv" href="assets/CV_OUKACINE_YANNIS.pdf" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir mon CV dans un nouvel onglet">
+    <span class="cv-icon" aria-hidden="true">📄</span>
+    <span class="cv-text">CV</span>
+    <span class="ext-indicator" aria-hidden="true">↗</span>
+  </a>
 </nav>
 
-<header id="home" class="hero section-hero" role="banner">
+<!-- Section d'accueil (Hero) -->
+<header id="home" class="section-hero">
   <div id="vanta-bg" aria-hidden="true"></div>
-  <div class="hero-content reveal">
-    <h1 class="title title--matte">Yannis Oukacine</h1>
-    <p class="subtitle subtitle--tech" data-typed data-i18n="hero.tagline">
-      De la conformité immobilière à l’ingénierie web
-    </p>
-    <p class="hero-intro" data-i18n="hero.pitch">
-      Je mets ma rigueur de la conformité, mon sens client et ma capacité à structurer des process au service de solutions web modernes.
-    </p>
+  <div class="hero-content">
+    <figure class="hero-avatar">
+      <img src="assets/images/profile.jpg" alt="Photo de Yannis Oukacine" width="220" height="220" loading="lazy" />
+    </figure>
+    <h1 class="title">Yannis Oukacine</h1>
+    <p class="subtitle" data-typed></p>
+  <p class="hero-intro">Candidat à une école d’ingénieur informatique en alternance. J’apporte une culture de rigueur, de service et de structuration que je veux transformer en compétences techniques solides et adaptées à l'ingénierie informatique.</p>
     <div class="hero-cta">
-      <a class="btn-primary" href="#projects" data-i18n="hero.cta.projects">Découvrir mes projets</a>
-      <a class="btn-outline" href="#contact" data-i18n="hero.cta.contact">Me contacter</a>
-      <a class="btn-outline btn-ghost" href="assets/cv-yannis.pdf" download data-i18n="hero.cta.cv">Télécharger mon CV</a>
+      <a href="#contact" class="btn-primary">Me contacter</a>
+  <a href="assets/CV_OUKACINE_YANNIS.pdf" class="btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Télécharger mon CV (nouvel onglet)">Télécharger mon CV <span class="ext-indicator" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </header>
 
 <main id="main">
-  <!-- À PROPOS -->
+  <!-- Section À propos -->
   <section id="about" class="section section--alt" aria-labelledby="about-title">
-    <h2 id="about-title" class="reveal" data-i18n="about.title">À propos</h2>
-    <div class="about-grid">
+  <h2 id="about-title" class="reveal">À propos</h2>
+    <div class="about-grid about-grid--enhanced">
       <div class="about-block reveal">
-        <h3 data-i18n="about.contextTitle">Contexte</h3>
-        <p data-i18n="about.context">
-          Après plusieurs expériences en conformité et relation client dans l’immobilier et la finance, j’ai choisi de me réorienter vers le développement web.
-        </p>
+        <div class="about-head">
+          <span class="about-icon" aria-hidden="true">🔄</span>
+          <h3>Cap vers l’ingénierie</h3>
+        </div>
+  <p>Mon parcours en conformité et relation client m’a appris la précision, la communication et l’organisation. Je souhaite désormais les appliquer à un contexte d’ingénierie logicielle : comprendre, modéliser, implémenter et itérer.</p>
+        <ul class="about-tags"><li>Analyse</li><li>Organisation</li><li>Fiabilité</li></ul>
       </div>
       <div class="about-block reveal">
-        <h3 data-i18n="about.transitionTitle">Transition</h3>
-        <p data-i18n="about.transition">
-          J’ai commencé par structurer des processus, automatiser des suivis et documenter des flux – des compétences directement transposables au code.
-        </p>
+        <div class="about-head">
+          <span class="about-icon" aria-hidden="true">🛠️</span>
+          <h3>Apprentissage intentionnel</h3>
+        </div>
+  <p>J’avance par cycles courts : mini‑objectifs, construction d’un composant ou d’un script, documentation, rétro rapide. Chaque fonctionnalité (préloader, accordéon accessible, thème, timeline) consolide un socle.</p>
+        <ul class="about-tags"><li>Micro-projets</li><li>Itération</li><li>Capitalisation</li></ul>
       </div>
       <div class="about-block reveal">
-        <h3 data-i18n="about.nowTitle">Aujourd’hui</h3>
-        <p data-i18n="about.now">
-          Je conçois des interfaces claires, accessibles et maintenables en adoptant de bonnes pratiques (sémantique, performance, i18n, UX).
-        </p>
+        <div class="about-head">
+          <span class="about-icon" aria-hidden="true">📈</span>
+          <h3>Motivation durable</h3>
+        </div>
+  <p>Je progresse en mesurant : lisibilité du code, interaction fluide, réduction des approximations. Relier valeur métier et technique rend l’apprentissage concret et me pousse plus loin.</p>
+        <ul class="about-tags"><li>Curiosité</li><li>Mesure</li><li>UX</li></ul>
       </div>
       <div class="about-block reveal">
-        <h3 data-i18n="about.objectiveTitle">Objectif</h3>
-        <p data-i18n="about.objective">
-          Intégrer une équipe où je peux grandir techniquement tout en apportant méthode, sens du service et amélioration continue.
-        </p>
+        <div class="about-head">
+          <span class="about-icon" aria-hidden="true">🚀</span>
+          <h3>Objectif alternance</h3>
+        </div>
+  <p>Intégrer une école d’ingénieur (alternance) et évoluer dans une équipe où je peux consolider : bases web, algorithmie, patterns, qualité; tout en apportant rigueur, process et sens du détail.</p>
+        <ul class="about-tags"><li>Equipe</li><li>Qualité</li><li>Progression</li></ul>
+      </div>
+  <div class="about-block about-block--metrics reveal">
+        <div class="about-metrics">
+          <div class="metric"><span class="metric-value">+40h</span><span class="metric-label">apprentissage ciblé / mois</span></div>
+          <div class="metric"><span class="metric-value">12</span><span class="metric-label">micro‑projets réalisés</span></div>
+          <div class="metric"><span class="metric-value">100%</span><span class="metric-label">socle sans framework</span></div>
+        </div>
+        <p class="metrics-note">Je privilégie la compréhension des fondamentaux avant d’empiler des bibliothèques.</p>
       </div>
     </div>
   </section>
 
-  <!-- EXPÉRIENCE -->
+  <!-- Section Expérience -->
   <section id="experience" class="section" aria-labelledby="exp-title">
-    <h2 id="exp-title" class="reveal" data-i18n="experience.title">Expérience</h2>
+  <h2 id="exp-title" class="reveal">Expérience</h2>
     <div class="accordion" id="exp-accordion" role="group" aria-describedby="exp-help">
-      <p id="exp-help" class="visually-hidden" data-i18n="experience.help">Chaque bouton ouvre ou ferme le détail de l'expérience correspondante.</p>
-
-      <!-- Responsable conformité OQORO -->
+  <p id="exp-help" class="visually-hidden">Chaque bouton ouvre ou ferme le détail de l'expérience correspondante.</p>
+  <!-- Bloc expérience OQORO Conformité -->
       <div class="accordion-item">
         <h3 class="accordion-header">
           <button class="accordion-trigger" aria-expanded="true" aria-controls="exp1-panel" id="exp1-trigger">
-            <span class="acc-title" data-i18n="experience.complianceTitle">Responsable conformité – OQORO</span>
-            <span class="acc-dates" data-i18n="experience.complianceDates">2024 — 2025</span>
-            <span class="acc-icon" aria-hidden="true">−</span>
+            <div class="acc-header">
+              <div class="acc-top">
+                <span class="acc-company">OQORO <span class="acc-company-alt">(ex Mon Bel Appart)</span></span>
+                <span class="acc-dates">Déc. 2024 – Maintenant</span>
+              </div>
+              <div class="acc-tags">
+                <span class="tag tag-alt">Alternance</span>
+                <span class="tag tag-role">Chargé de conformité</span>
+              </div>
+            </div>
+            <span class="acc-icon-wrap" aria-hidden="true"><span class="acc-icon">−</span></span>
           </button>
         </h3>
         <div id="exp1-panel" class="accordion-panel open" role="region" aria-labelledby="exp1-trigger">
           <div class="exp-card">
-            <div class="exp-meta">
-              <span data-i18n="experience.complianceLocation">📍 Lyon 7e</span>
-              <a class="ext" href="https://oqoro.com" target="_blank" rel="noopener noreferrer">oqoro.com ↗</a>
-            </div>
-            <ul class="bullets" data-i18n-list="experience.complianceBullets"></ul>
-            <ul class="chips">
-              <li>Conformité</li><li>Gestion d’équipe</li><li>Procédures</li><li>Automatisation</li>
+            <ul class="bullets">
+              <li>Gestion et coordination d’une équipe dédiée aux opérations de conformité</li>
+              <li>Optimisation et suivi des processus internes pour améliorer l’efficacité</li>
+              <li>Analyse de données et suivi d’indicateurs de performance</li>
+              <li>Planification et organisation des interventions sur le parc immobilier</li>
+              <li>Mise en place d’actions de communication et développement du service</li>
             </ul>
+            <ul class="chips"><li>Conformité</li><li>Optimisation</li><li>Data</li><li>Organisation</li></ul>
           </div>
         </div>
       </div>
 
-      <!-- Chargé relation client OQORO -->
+  <!-- Bloc expérience OQORO Relation Client -->
       <div class="accordion-item">
         <h3 class="accordion-header">
           <button class="accordion-trigger" aria-expanded="false" aria-controls="exp2-panel" id="exp2-trigger">
-            <span class="acc-title" data-i18n="experience.clientTitle">Chargé relation client – OQORO</span>
-            <span class="acc-dates" data-i18n="experience.clientDates">2024</span>
-            <span class="acc-icon" aria-hidden="true">+</span>
+            <div class="acc-header">
+              <div class="acc-top">
+                <span class="acc-company">OQORO <span class="acc-company-alt">(ex Mon Bel Appart)</span></span>
+                <span class="acc-dates">Mai 2024 – Déc. 2024</span>
+              </div>
+              <div class="acc-tags">
+                <span class="tag tag-alt">Alternance</span>
+                <span class="tag tag-role">Chargé de relation client</span>
+              </div>
+            </div>
+            <span class="acc-icon-wrap" aria-hidden="true"><span class="acc-icon">+</span></span>
           </button>
         </h3>
         <div id="exp2-panel" class="accordion-panel" role="region" aria-labelledby="exp2-trigger">
           <div class="exp-card">
-            <div class="exp-meta">
-              <span>📍 Lyon 7e</span>
-            </div>
-            <ul class="bullets" data-i18n-list="experience.clientBullets"></ul>
-            <ul class="chips">
-              <li>Onboarding</li><li>Données</li><li>Suivi légal</li><li>Annonce & rédaction</li>
+            <ul class="bullets">
+              <li>Gestion de projet et coordination entre clients, prestataires et partenaires</li>
+              <li>Suivi des obligations légales et contrôle qualité des logements</li>
+              <li>Planification et organisation des interventions techniques et visites virtuelles</li>
+              <li>Rédaction, mise en ligne et suivi des annonces immobilières</li>
+              <li>Relation client : premier point de contact, accompagnement et expérience fluide</li>
             </ul>
+            <ul class="chips"><li>Relation client</li><li>Coordination</li><li>Légal</li><li>Rédaction</li></ul>
           </div>
         </div>
       </div>
 
-      <!-- Commercial Lyonso Basket -->
+  <!-- Bloc expérience Caisse d’Epargne -->
       <div class="accordion-item">
         <h3 class="accordion-header">
           <button class="accordion-trigger" aria-expanded="false" aria-controls="exp3-panel" id="exp3-trigger">
-            <span class="acc-title" data-i18n="experience.salesTitle">Commercial – Lyonso Basket</span>
-            <span class="acc-dates" data-i18n="experience.salesDates">2024</span>
-            <span class="acc-icon" aria-hidden="true">+</span>
+            <div class="acc-header">
+              <div class="acc-top">
+                <span class="acc-company">Caisse d’Epargne AURA</span>
+                <span class="acc-dates">Sept. 2022 – Août 2023</span>
+              </div>
+              <div class="acc-tags">
+                <span class="tag tag-alt">Alternance</span>
+                <span class="tag tag-role">Gestion de clientèle</span>
+              </div>
+            </div>
+            <span class="acc-icon-wrap" aria-hidden="true"><span class="acc-icon">+</span></span>
           </button>
         </h3>
         <div id="exp3-panel" class="accordion-panel" role="region" aria-labelledby="exp3-trigger">
           <div class="exp-card">
-            <div class="exp-meta">
-              <span>📍 Oullins / Pierre-Bénite</span>
-            </div>
-            <ul class="bullets" data-i18n-list="experience.salesBullets"></ul>
-            <ul class="chips"><li>Prospection</li><li>Partenaires</li><li>Événementiel</li></ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gestion clientèle Caisse d'Épargne -->
-      <div class="accordion-item">
-        <h3 class="accordion-header">
-          <button class="accordion-trigger" aria-expanded="false" aria-controls="exp4-panel" id="exp4-trigger">
-            <span class="acc-title" data-i18n="experience.bankTitle">Gestionnaire de clientèle – Caisse d'Épargne</span>
-            <span class="acc-dates" data-i18n="experience.bankDates">2023 — 2024</span>
-            <span class="acc-icon" aria-hidden="true">+</span>
-          </button>
-        </h3>
-        <div id="exp4-panel" class="accordion-panel" role="region" aria-labelledby="exp4-trigger">
-          <div class="exp-card">
-            <div class="exp-meta">
-              <span>📍 Rhône-Alpes</span>
-            </div>
-            <ul class="bullets" data-i18n-list="experience.bankBullets"></ul>
-            <ul class="chips"><li>Relation client</li><li>Analyse besoins</li><li>Orientation produits</li></ul>
+            <ul class="bullets">
+              <li>Gestion et suivi d’un portefeuille de clients particuliers</li>
+              <li>Analyse patrimoniale et identification des besoins financiers</li>
+              <li>Mise en place et suivi d’actions commerciales</li>
+              <li>Conseil produits bancaires, assurance, épargne</li>
+              <li>Développement de la relation client et gestion de la satisfaction</li>
+            </ul>
+            <ul class="chips"><li>Relation client</li><li>Analyse</li><li>Conseil</li><li>Commercial</li></ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJETS -->
+  <!-- Section Projets -->
   <section id="projects" class="section">
-    <h2 class="reveal" data-i18n="projects.title">Projets</h2>
-    <p class="section-lead reveal" data-i18n="projects.lead">
+  <h2 class="reveal">Projets</h2>
+  <p class="section-lead reveal">
       Une sélection mettant en avant ma démarche structurée, l’attention aux détails et l’envie de progresser techniquement.
     </p>
     <div class="projects-grid">
-      <article class="project-card reveal">
-        <h3 data-i18n="projects.portfolioTitle">Portfolio personnel</h3>
-        <p data-i18n="projects.portfolioDesc">
-          Développement from scratch (Vanilla JS) : i18n, thème dark/light, accessibilité (ARIA, skip link), animations progressives, composant accordéon, préloader, intégration d’un fond WebGL Vanta, gestion locale (localStorage), structure sémantique + SEO (JSON-LD).
+      <article class="project-card reveal project-card--featured">
+        <div class="project-media" aria-hidden="true">🧭</div>
+        <h3>Portfolio personnel</h3>
+        <ul class="project-meta">
+          <li>2025</li>
+          <li>Statut: en ligne</li>
+        </ul>
+        <p>
+          Mon site personnel pour me présenter simplement et montrer mes projets. Conçu sans framework pour rester léger, rapide et accessible. Thème clair/sombre et quelques animations discrètes pour améliorer la lecture.
         </p>
+  <p class="project-goal"><span class="goal-label">Objectif</span> Présenter clairement mon profil et soutenir ma candidature pour une alternance en école d’ingénierie informatique.</p>
         <ul class="chips">
           <li>HTML5</li><li>CSS (Custom Props)</li><li>Vanilla JS</li><li>Accessibilité</li>
         </ul>
-        <div class="project-links">
-          <a href="#" data-i18n="projects.link.code">Code ↗</a>
-          <a href="#" data-i18n="projects.link.demo">Demo ↗</a>
-        </div>
-      </article>
+        
+  </article>
 
       <article class="project-card reveal">
-        <h3 data-i18n="projects.automationTitle">Suivi conformité automatisé (concept)</h3>
-        <p data-i18n="projects.automationDesc">
-          Modélisation d’un mini-outil : suivi de diagnostics, rappels programmés, statut visuel des logements, réduction des oublis et emails manuels.
+        <div class="project-media" aria-hidden="true">🧩</div>
+        <h3>Suivi conformité automatisé (Proof‑of‑Concept)</h3>
+        <ul class="project-meta">
+          <li>2025</li>
+          <li>Statut: concept</li>
+        </ul>
+        <p>
+          Modélisation d’un mini‑outil de suivi: échéances diagnostics, rappels programmés, statut visuel par logement, réduction des oublis et des relances manuelles. Focus sur data model simple + UX claire.
         </p>
+  <p class="project-goal"><span class="goal-label">Objectif</span> Illustrer ma capacité à modéliser un besoin métier et à proposer une solution simple et fiable.</p>
         <ul class="chips"><li>Process</li><li>Automatisation</li><li>Organisation</li></ul>
-        <div class="project-links">
-          <a href="#" data-i18n="projects.link.notes">Notes ↗</a>
-        </div>
+        
       </article>
 
       <article class="project-card reveal">
-        <h3 data-i18n="projects.onboardingTitle">Optimisation onboarding propriétaires</h3>
-        <p data-i18n="projects.onboardingDesc">
-          Structuration d’un flux de collecte de données : checklists normalisées, réduction du temps de reprise infos et amélioration traçabilité.
+        <div class="project-media" aria-hidden="true">📦</div>
+        <h3>Optimisation onboarding propriétaires</h3>
+        <ul class="project-meta">
+          <li>2024</li>
+          <li>Statut: étude de cas</li>
+        </ul>
+        <p>
+          Structuration d’un flux de collecte d’informations: checklists normalisées, réduction du temps de reprise des données, amélioration de la traçabilité et du taux de complétude.
         </p>
+  <p class="project-goal"><span class="goal-label">Objectif</span> Montrer une approche pragmatique pour améliorer l’efficacité opérationnelle et la qualité des données.</p>
         <ul class="chips"><li>Analyse</li><li>Standardisation</li><li>Data qualité</li></ul>
       </article>
     </div>
   </section>
 
-  <!-- STACK / TECH -->
+  <!-- Section Stack technique -->
   <section id="stack" class="section section--alt">
-    <h2 class="reveal" data-i18n="stack.title">Stack du Portfolio</h2>
-    <div class="stack-grid">
+    <h2 class="reveal">Stack du Portfolio</h2>
+    <div class="stack-grid stack-grid--enhanced">
       <div class="stack-card reveal">
-        <h3>Front</h3>
-        <ul>
+        <div class="stack-icon" aria-hidden="true">🧱</div>
+        <h3>Structure</h3>
+        <ul class="stack-features">
           <li>HTML sémantique</li>
-          <li>CSS moderne (grilles fluides, custom properties)</li>
-          <li>Animations accessibles</li>
+          <li>Sections hiérarchisées</li>
+          <li>Design tokens (CSS custom properties)</li>
         </ul>
+        <ul class="stack-chips"><li>HTML5</li><li>Tokens</li><li>Vanilla</li></ul>
       </div>
       <div class="stack-card reveal">
-        <h3>JavaScript</h3>
-        <ul>
-          <li>IntersectionObserver</li>
-          <li>LocalStorage (préférences)</li>
-          <li>Gestion state simple</li>
-        </ul>
-      </div>
-      <div class="stack-card reveal">
-        <h3>Expérience</h3>
-        <ul>
+        <div class="stack-icon" aria-hidden="true">🎨</div>
+        <h3>UI & Styles</h3>
+        <ul class="stack-features">
+          <li>Grilles fluides & flex</li>
           <li>Dark / Light theme</li>
-          <li>i18n (FR/EN)</li>
+          <li>Glass / dégradés subtils</li>
+        </ul>
+        <ul class="stack-chips"><li>CSS Grid</li><li>Flex</li><li>Gradients</li></ul>
+      </div>
+      <div class="stack-card reveal">
+        <div class="stack-icon" aria-hidden="true">⚙️</div>
+        <h3>Interaction</h3>
+        <ul class="stack-features">
+          <li>Accordion accessible</li>
+          <li>Typed effect custom</li>
           <li>Préloader progressif</li>
         </ul>
+        <ul class="stack-chips"><li>ARIA</li><li>Focus</li><li>Animation</li></ul>
       </div>
       <div class="stack-card reveal">
-        <h3>Qualité</h3>
-        <ul>
-          <li>Accessibilité ARIA</li>
-          <li>SEO (meta + JSON-LD)</li>
-          <li>Code modulaire</li>
+        <div class="stack-icon" aria-hidden="true">🧠</div>
+        <h3>JavaScript</h3>
+        <ul class="stack-features">
+          <li>IntersectionObserver</li>
+          <li>LocalStorage préférences</li>
+          <li>Gestion DOM ciblée (pas de framework)</li>
         </ul>
+        <ul class="stack-chips"><li>Observer</li><li>State léger</li><li>Perf</li></ul>
+      </div>
+      <div class="stack-card reveal">
+        <div class="stack-icon" aria-hidden="true">🔍</div>
+        <h3>SEO & Qualité</h3>
+        <ul class="stack-features">
+          <li>Meta + JSON-LD</li>
+          <li>Poids réduit (aucun bundle)</li>
+          <li>Structure accessible (ARIA / skip)</li>
+        </ul>
+        <ul class="stack-chips"><li>SEO</li><li>A11y</li><li>Sémantique</li></ul>
+      </div>
+      <div class="stack-card reveal">
+        <div class="stack-icon" aria-hidden="true">🌌</div>
+        <h3>Effets</h3>
+        <ul class="stack-features">
+          <li>Vanta.js (WebGL)</li>
+          <li>Révélations progressives</li>
+          <li>Hover micro-interactions</li>
+        </ul>
+        <ul class="stack-chips"><li>Vanta</li><li>WebGL</li><li>UX</li></ul>
       </div>
     </div>
 
-    <div class="skills-bars-wrapper">
-      <h3 class="reveal" data-i18n="stack.skillsTitle">Forces transverses</h3>
+  <div class="skills-bars-wrapper">
+  <h3 class="reveal">Forces transverses</h3>
       <div class="skills-bars">
         <div class="skill-bar reveal" data-level="90">
-          <span class="skill-bar-label" data-i18n="skills.org">Organisation & structuration</span>
+          <span class="skill-bar-label">Organisation & structuration</span>
           <span class="skill-bar-fill"></span>
         </div>
         <div class="skill-bar reveal" data-level="88">
-          <span class="skill-bar-label" data-i18n="skills.client">Relation & écoute client</span>
+          <span class="skill-bar-label">Relation & écoute client</span>
           <span class="skill-bar-fill"></span>
         </div>
         <div class="skill-bar reveal" data-level="82">
-          <span class="skill-bar-label" data-i18n="skills.compliance">Rigueur conformité</span>
+          <span class="skill-bar-label">Rigueur conformité</span>
           <span class="skill-bar-fill"></span>
         </div>
         <div class="skill-bar reveal" data-level="75">
-          <span class="skill-bar-label" data-i18n="skills.problem">Résolution de problèmes</span>
+          <span class="skill-bar-label">Résolution de problèmes</span>
           <span class="skill-bar-fill"></span>
         </div>
-        <div class="skill-bar reveal" data-level="70">
-          <span class="skill-bar-label" data-i18n="skills.webprogress">Progression Web</span>
-          <span class="skill-bar-fill"></span>
+          <div class="skill-bar reveal" data-level="70">
+            <span class="skill-bar-label">Progression Ingénierie</span>
+            <span class="skill-bar-fill"></span>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Parcours (éducation) -->
+  <section id="education" class="section section-edu" aria-labelledby="edu-title">
+    <h2 id="edu-title" class="reveal">Parcours</h2>
+    <div class="edu-timeline" role="list">
+      <div class="edu-item reveal" role="listitem">
+        <div class="edu-left">
+          <span class="edu-year">2024–2025</span>
+          <span class="edu-focus">Management / Vision stratégique &amp; organisation</span>
+        </div>
+        <div class="edu-mid" aria-hidden="true">
+          <span class="edu-node reveal-node"></span>
+          <span class="edu-line"></span>
+        </div>
+        <div class="edu-right">
+          <h3 class="edu-title"><span class="edu-emoji" aria-hidden="true">🏆</span><span class="edu-degree">Master 2</span><span class="edu-sep" aria-hidden="true">•</span><span class="edu-school">ESG Sport</span></h3>
+        </div>
+      </div>
+      <div class="edu-item reveal" role="listitem">
+        <div class="edu-left">
+          <span class="edu-year">2023–2024</span>
+          <span class="edu-focus">Analyse financière &amp; conseil</span>
+        </div>
+        <div class="edu-mid" aria-hidden="true">
+          <span class="edu-node reveal-node"></span>
+          <span class="edu-line"></span>
+        </div>
+        <div class="edu-right">
+          <h3 class="edu-title"><span class="edu-emoji" aria-hidden="true">📊</span><span class="edu-degree">Licence Gestion de patrimoine</span><span class="edu-sep" aria-hidden="true">•</span><span class="edu-school">Institut Carrel</span></h3>
+        </div>
+      </div>
+      <div class="edu-item reveal" role="listitem">
+        <div class="edu-left">
+          <span class="edu-year">2021–2023</span>
+          <span class="edu-focus">Gestion opérationnelle &amp; procédures</span>
+        </div>
+        <div class="edu-mid" aria-hidden="true">
+          <span class="edu-node reveal-node"></span>
+          <span class="edu-line"></span>
+        </div>
+        <div class="edu-right">
+          <h3 class="edu-title"><span class="edu-emoji" aria-hidden="true">🗂️</span><span class="edu-degree">BTS Gestion des administrations</span><span class="edu-sep" aria-hidden="true">•</span><span class="edu-school">Montplaisir</span></h3>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EDUCATION -->
-  <section id="education" class="section">
-    <h2 class="reveal" data-i18n="education.title">Parcours</h2>
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <div class="timeline-badge">2024–2025</div>
-        <h3>Master 2 – ESG Sport</h3>
-        <p data-i18n="education.master">Management / Vision stratégique & organisation</p>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-badge">2023–2024</div>
-        <h3>Licence Gestion de patrimoine – Institut Carrel</h3>
-        <p data-i18n="education.licence">Analyse financière & conseil</p>
-      </div>
-      <div class="timeline-item reveal">
-        <div class="timeline-badge">2021–2023</div>
-        <h3>BTS Gestion des administrations – Montplaisir</h3>
-        <p data-i18n="education.bts">Gestion opérationnelle & procédures</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- VALEUR AJOUTÉE -->
+  <!-- Section Valeur ajoutée -->
   <section id="value" class="section section--alt">
-    <h2 class="reveal" data-i18n="value.title">Valeur ajoutée</h2>
-    <div class="value-grid">
+    <h2 class="reveal">Valeur ajoutée</h2>
+  <p class="value-intro reveal">Apport immédiat (rigueur, structuration, sens du service) + trajectoire d’apprentissage alignée avec un cursus d’ingénierie informatique.</p>
+    <div class="value-grid value-grid--enhanced">
       <div class="value-card reveal">
-        <h3 data-i18n="value.rigourTitle">Rigueur & Fiabilité</h3>
-        <p data-i18n="value.rigourDesc">Expérience en conformité : suivi précis, zéro détail oublié, culture du contrôle réaliste.</p>
+        <div class="value-icon" aria-hidden="true">🧩</div>
+        <h3>Clarté & Structuration</h3>
+        <p>Je segmente, nomme et hiérarchise pour rendre le code et les interfaces plus lisibles et maintenables.</p>
+        <ul class="mini-tags"><li>Sémantique</li><li>Architecture légère</li><li>Lisibilité</li></ul>
       </div>
       <div class="value-card reveal">
-        <h3 data-i18n="value.serviceTitle">Empathie & Service</h3>
-        <p data-i18n="value.serviceDesc">Capacité à traduire les besoins métiers en actions structurées.</p>
+        <div class="value-icon" aria-hidden="true">🛡️</div>
+        <h3>Fiabilité opérationnelle</h3>
+        <p>Culture conformité : contrôle des états, scénarios limites, réduction des risques d’oubli.</p>
+        <ul class="mini-tags"><li>Vérification</li><li>Edge cases</li><li>Suivi</li></ul>
       </div>
       <div class="value-card reveal">
-        <h3 data-i18n="value.structTitle">Structuration & Progression</h3>
-        <p data-i18n="value.structDesc">Je documente, j’automatise, j’améliore en continu.</p>
+        <div class="value-icon" aria-hidden="true">🤝</div>
+        <h3>Expérience utilisateur</h3>
+        <p>Petits détails d’interface (timing, focus, feedback) qui rendent une interaction fluide et crédible.</p>
+        <ul class="mini-tags"><li>Feedback</li><li>Accessibilité</li><li>Micro‑UX</li></ul>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon" aria-hidden="true">⚡</div>
+        <h3>Progression continue</h3>
+        <p>Analyse de ce qui peut être retiré, allégé ou factorisé. Journal d’améliorations incrémentales.</p>
+        <ul class="mini-tags"><li>Refactor</li><li>Mesure</li><li>Itération</li></ul>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon" aria-hidden="true">🔍</div>
+        <h3>Sens du détail</h3>
+        <p>Contraste, lisibilité, cohérence typographique, cohésion des espacements & alignements.</p>
+        <ul class="mini-tags"><li>Typo</li><li>Rythme</li><li>Contraste</li></ul>
+      </div>
+      <div class="value-card reveal value-card--focus">
+        <div class="value-icon" aria-hidden="true">📚</div>
+        <h3>Apprentissage actif</h3>
+        <p>Je documente ce que j’apprends (notes synthétiques), recycle en mini‑exemples et partage pour ancrer.</p>
+        <ul class="mini-tags"><li>Documentation</li><li>Transmission</li><li>Veille</li></ul>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- Section Contact -->
   <section id="contact" class="section" aria-labelledby="contact-title">
-    <h2 id="contact-title" class="reveal" data-i18n="contact.title">Contact</h2>
-    <p class="reveal" data-i18n="contact.intro">Un projet, une opportunité, une discussion ?</p>
+  <h2 id="contact-title" class="reveal">Contact</h2>
+  <p class="reveal">Un projet, une opportunité, une discussion ?</p>
     <div class="contact-actions reveal">
-      <button type="button" class="btn-outline" id="copyEmailBtn" data-i18n="contact.copyEmail">Copier mon email</button>
-      <a class="btn-primary" href="mailto:yannis.oukacine@gmail.com?subject=Contact%20Portfolio" data-i18n="contact.emailDirect">Email direct</a>
+  <button type="button" class="btn-outline" id="copyEmailBtn">Copier mon email</button>
+  <a class="btn-primary" href="mailto:yannis.oukacine@gmail.com?subject=Contact%20Portfolio">Email direct</a>
     </div>
     <form class="contact-form" id="contactForm" novalidate>
       <div class="form-field">
-        <label for="name" data-i18n="contact.nameLabel">Votre nom</label>
+  <label for="name">Votre nom</label>
         <input id="name" name="name" type="text" required autocomplete="name">
         <span class="field-msg" aria-live="polite"></span>
       </div>
       <div class="form-field">
-        <label for="email" data-i18n="contact.emailLabel">Votre email</label>
+  <label for="email">Votre email</label>
         <input id="email" name="email" type="email" required autocomplete="email">
         <span class="field-msg" aria-live="polite"></span>
       </div>
       <div class="form-field">
-        <label for="message" data-i18n="contact.messageLabel">Votre message</label>
+  <label for="message">Votre message</label>
         <textarea id="message" name="message" rows="5" required minlength="10"></textarea>
         <span class="field-msg" aria-live="polite"></span>
       </div>
-      <button type="submit" class="btn-primary" data-i18n="contact.submit">Envoyer</button>
+  <button type="submit" class="btn-primary">Envoyer</button>
       <p id="formStatus" class="form-status" aria-live="polite"></p>
     </form>
   </section>
 </main>
 
+<!-- Pied de page -->
 <footer class="footer">
-  <p class="footer-copy" data-i18n="footer.copyright">© 2025 Fait avec rigueur par Yannis Oukacine</p>
+  <p class="footer-copy">© 2025 Fait avec rigueur par Yannis Oukacine</p>
   <ul class="social">
     <li><a href="https://github.com/yannisoke" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/yannis-oukacine-63347320b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
@@ -405,16 +527,17 @@
   </ul>
 </footer>
 
-<!-- Bouton scroll top -->
+<!-- Bouton pour remonter en haut de la page -->
 <button id="toTopBtn" class="to-top" type="button" aria-label="Retour en haut" title="Retour en haut">
   <svg class="to-top-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 </button>
 
-<!-- Libs -->
+<!-- Librairies Vanta.js et Three.js pour les effets visuels -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js" defer></script>
 <script src="script.js" defer></script>
+<!-- Fin du fichier HTML -->
 </body>
 </html>

@@ -1,71 +1,16 @@
 console.log("Script initialisé ✔️");
 
-/* ================= Utilitaires ================= */
+// Fonctions utilitaires pour simplifier le code
 const qs = sel => document.querySelector(sel);
 const qsa = sel => [...document.querySelectorAll(sel)];
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
-/* ================= i18n ================= */
-const I18N_STORAGE_KEY = 'lang';
-const SUPPORTED_LANGS = ['fr', 'en'];
-let currentLang = 'fr';
-let translations = {};
+// La gestion des langues (i18n) est retirée, tout est en français
 
-async function loadTranslations(lang) {
-  try {
-    const res = await fetch(`locales/${lang}.json`);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    translations[lang] = await res.json();
-  } catch (e) {
-    console.warn('Traductions indisponibles pour', lang, e);
-  }
-}
-function resolvePath(obj, path) {
-  return path.split('.').reduce((acc, k) => acc && acc[k] !== undefined ? acc[k] : undefined, obj);
-}
-function applyTranslations() {
-  const dict = translations[currentLang] || {};
-  document.documentElement.setAttribute('lang', currentLang);
-  qsa('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = resolvePath(dict, key);
-    if (val !== undefined) el.innerHTML = String(val).replace('2025', new Date().getFullYear());
-  });
-  qsa('[data-i18n-list]').forEach(listEl => {
-    const key = listEl.getAttribute('data-i18n-list');
-    const arr = resolvePath(dict, key);
-    if (Array.isArray(arr)) listEl.innerHTML = arr.map(v => `<li>${v}</li>`).join('');
-  });
-  qsa('.lang-btn').forEach(btn => {
-    const active = btn.dataset.lang === currentLang;
-    btn.classList.toggle('active', active);
-    btn.setAttribute('aria-pressed', String(active));
-  });
-  updateThemeIconAlt();
-}
-async function initI18n() {
-  const stored = localStorage.getItem(I18N_STORAGE_KEY);
-  const browserLang = (navigator.language || 'fr').slice(0,2).toLowerCase();
-  currentLang = SUPPORTED_LANGS.includes(stored) ? stored :
-                SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'fr';
-  await Promise.all(SUPPORTED_LANGS.map(loadTranslations));
-  applyTranslations();
-}
-qsa('.lang-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const lang = btn.dataset.lang;
-    if (lang && SUPPORTED_LANGS.includes(lang) && lang !== currentLang) {
-      currentLang = lang;
-      localStorage.setItem(I18N_STORAGE_KEY, lang);
-      applyTranslations();
-      restartTyped();
-    }
-  });
-});
-
-/* ================= Navigation & scroll ================= */
+// Gestion de la navigation et du scroll
 const navLinks = qsa('.links a[data-nav]');
 const sections = qsa('section, header.section-hero');
+// Met à jour le lien actif dans le menu selon la section visible
 const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -79,7 +24,7 @@ const sectionObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 sections.forEach(s => sectionObserver.observe(s));
 
-/* Scroll fluide */
+// Active le scroll fluide quand on clique sur un lien du menu
 qsa('.links a[data-nav]').forEach(link => {
   link.addEventListener('click', e => {
     const href = link.getAttribute('href');
@@ -90,7 +35,7 @@ qsa('.links a[data-nav]').forEach(link => {
   });
 });
 
-/* Hide nav on scroll + bouton top */
+// Cache la barre de navigation quand on descend, affiche le bouton retour en haut
 let lastScroll = 0;
 const nav = qs('.nav');
 const SCROLL_HIDE_OFFSET = 160;
@@ -112,7 +57,7 @@ toTopBtn?.addEventListener('click', () => {
   window.scrollTo({ top:0, behavior:'smooth' });
 });
 
-/* ================= Accordion Expérience ================= */
+// Gère l'ouverture/fermeture des blocs d'expérience (accordion)
 function setupAccordion(rootSelector) {
   const root = qs(rootSelector);
   if (!root) return;
@@ -153,7 +98,7 @@ function setupAccordion(rootSelector) {
 }
 setupAccordion('#exp-accordion');
 
-/* ================= Reveal Observer ================= */
+// Affiche les éléments au scroll (animation reveal)
 const revealObserver = new IntersectionObserver((entries, obs) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -171,31 +116,67 @@ const revealObserver = new IntersectionObserver((entries, obs) => {
     }
   });
 }, { threshold: 0.25 });
-qsa('.reveal, .skill-bar').forEach(el => revealObserver.observe(el));
+qsa('.reveal, .skill-bar, .reveal-node').forEach(el => revealObserver.observe(el));
 
-/* ================= Thème & Vanta ================= */
+// Remplit les barres de progression dans la section À propos
+function initProgressBars() {
+  const bars = qsa('.pl-bar[data-pl]');
+  if (!bars.length) return;
+  // Feature detect attr() width support (not widely supported for width) -> fallback JS
+  const test = document.createElement('div');
+  test.style.width = 'attr(data-x percentage)';
+  const attrSupported = test.style.width.includes('attr(') === false; // if browser stripped it, we need JS anyway
+  bars.forEach(bar => {
+    const target = Number(bar.getAttribute('data-pl')) || 0;
+    if (attrSupported) {
+      // Use JS animation when element becomes visible
+      const animate = () => {
+        bar.style.setProperty('--pl-target', target + '%');
+        const fill = document.createElement('span');
+        fill.className = 'pl-fill';
+        fill.style.width = '0%';
+        bar.appendChild(fill);
+        requestAnimationFrame(() => { fill.style.width = target + '%'; });
+      };
+      if (bar.closest('.reveal')) {
+        const parent = bar.closest('.reveal');
+        const obs = new IntersectionObserver(es => {
+          es.forEach(en => { if (en.isIntersecting) { animate(); obs.disconnect(); } });
+        }, { threshold:0.3 });
+        obs.observe(parent);
+      } else animate();
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', initProgressBars);
+
+// Gère le changement de thème (clair/sombre) et l'effet Vanta.js
 const THEME_KEY = 'pref-theme';
 const themeBtn = qs('#modeToggle');
 const themeIcon = qs('#toggleIcon');
 const ICONS = { light: 'assets/icons/sun.png', dark: 'assets/icons/moon.png' };
 let vantaInstance = null;
 
+// Met à jour le texte alternatif de l'icône du bouton thème
 function updateThemeIconAlt() {
   if (!themeIcon) return;
   const dark = document.body.getAttribute('data-theme') === 'dark';
-  themeIcon.alt = currentLang === 'en'
-    ? dark ? 'Sun icon (switch to light mode)' : 'Moon icon (switch to dark mode)'
-    : dark ? 'Icône soleil (passer en clair)' : 'Icône lune (passer en sombre)';
+  themeIcon.alt = dark ? 'Icône soleil (passer en clair)' : 'Icône lune (passer en sombre)';
 }
-function applyTheme(theme, skipVanta=false) {
+
+// Applique le thème choisi et relance l'effet Vanta si besoin
+function applyTheme(theme, skipVanta = false) {
   document.body.setAttribute('data-theme', theme);
-  themeIcon.src = theme === 'dark' ? ICONS.light : ICONS.dark;
+  if (themeIcon) themeIcon.src = theme === 'dark' ? ICONS.light : ICONS.dark;
   updateThemeIconAlt();
-  localStorage.setItem(THEME_KEY, theme);
+  try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
   if (!skipVanta) reinitVanta();
 }
+
+// Initialise le thème au chargement de la page
 function initTheme() {
-  const stored = localStorage.getItem(THEME_KEY);
+  let stored = null;
+  try { stored = localStorage.getItem(THEME_KEY); } catch (_) {}
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(stored || (prefersDark ? 'dark' : 'light'), true);
 }
@@ -204,7 +185,7 @@ themeBtn?.addEventListener('click', () => {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 });
 
-/* Vanta */
+// Initialise et détruit l'effet Vanta.js (fond animé)
 function destroyVanta() {
   if (vantaInstance && typeof vantaInstance.destroy === 'function') {
     vantaInstance.destroy(); vantaInstance = null;
@@ -246,14 +227,10 @@ function initVanta() {
 function reinitVanta() { destroyVanta(); initVanta(); }
 window.addEventListener('beforeunload', destroyVanta);
 
-/* ================= Formulaire Contact ================= */
+// Gère le formulaire de contact (validation et affichage des messages)
 const contactForm = qs('#contactForm');
 const statusEl = qs('#formStatus');
-function t(key, fallback='') {
-  const dict = translations[currentLang] || {};
-  const val = resolvePath(dict, key);
-  return val !== undefined ? val : fallback;
-}
+// Les fonctions d'aide sont retirées, les messages sont en français
 if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
@@ -268,24 +245,24 @@ if (contactForm) {
       if (isInvalid) {
         valid = false;
         field.setAttribute('aria-invalid', 'true');
-        if (msg) msg.textContent = t('form.fieldError','Champ invalide');
+  if (msg) msg.textContent = 'Champ invalide';
       } else {
         field.removeAttribute('aria-invalid');
         if (msg) msg.textContent = '';
       }
     });
     if (!valid) {
-      statusEl.textContent = t('form.validationError','Veuillez corriger les erreurs.');
+      statusEl.textContent = 'Veuillez corriger les erreurs.';
       return;
     }
-    statusEl.textContent = t('contact.sending','Envoi...');
+    statusEl.textContent = 'Envoi...';
     await new Promise(r => setTimeout(r, 900));
-    statusEl.textContent = t('contact.sent','Message envoyé (simulation).');
+    statusEl.textContent = 'Message envoyé (simulation).';
     contactForm.reset();
   });
 }
 
-/* ================= PRELOADER ================= */
+// Gère l'animation de chargement (preloader)
 const PRELOADER_DURATION = 1800;
 let preloaderStart = null;
 let preloaderRAF = null;
@@ -294,11 +271,14 @@ const preloaderEl = qs('#preloader');
 const preloaderBar = qs('#preloader-bar');
 const preloaderPercent = qs('#preloader-percent');
 
+// Met à jour la barre de progression du preloader
 function setProgress(p) {
   const c = Math.min(1, Math.max(0, p));
   if (preloaderBar) preloaderBar.style.width = (c * 100).toFixed(2) + '%';
   if (preloaderPercent) preloaderPercent.textContent = Math.round(c * 100) + '%';
 }
+
+// Termine l'animation de chargement et affiche le contenu
 function finishPreloader() {
   if (preloaderDone) return;
   preloaderDone = true;
@@ -311,6 +291,8 @@ function finishPreloader() {
   setTimeout(() => reinitVanta(), 40);
   startTyped();
 }
+
+// Anime la progression du preloader
 function animatePreloader(ts) {
   if (preloaderDone) return;
   if (!preloaderStart) preloaderStart = ts;
@@ -320,6 +302,8 @@ function animatePreloader(ts) {
   if (elapsed >= PRELOADER_DURATION) finishPreloader();
   else preloaderRAF = requestAnimationFrame(animatePreloader);
 }
+
+// Lance le preloader au chargement de la page
 function initPreloader() {
   if (!preloaderEl) { reinitVanta(); startTyped(); return; }
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -331,17 +315,19 @@ function initPreloader() {
 }
 document.addEventListener('DOMContentLoaded', initPreloader);
 
-/* ================= Typed Effect ================= */
+// Effet d'écriture animée pour le sous-titre
 let typedTimer = null;
+// Liste des phrases à afficher en animation
 function typedStrings() {
-  const dict = translations[currentLang] || {};
-  const arr = resolvePath(dict, 'hero.typed') || [
-    'De la conformité immobilière au web',
+  return [
+    'De la conformité à l’ingénierie informatique',
+    'Objectif : alternance école d’ingénieur',
     'Rigueur. Service. Structuration.'
   ];
-  return arr;
 }
-function typeSequence(el, phrases, idx=0) {
+
+// Affiche chaque phrase lettre par lettre puis passe à la suivante
+function typeSequence(el, phrases, idx = 0) {
   if (!el || phrases.length === 0) return;
   const phrase = phrases[idx % phrases.length];
   let i = 0;
@@ -352,12 +338,13 @@ function typeSequence(el, phrases, idx=0) {
       i++;
       typedTimer = setTimeout(step, 38);
     } else {
-      // Pause then next
-      typedTimer = setTimeout(() => typeSequence(el, phrases, idx+1), 1700);
+      typedTimer = setTimeout(() => typeSequence(el, phrases, idx + 1), 1700);
     }
   }
   step();
 }
+
+// Démarre l'effet d'écriture animée
 function startTyped() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const el = qs('[data-typed]');
@@ -365,35 +352,36 @@ function startTyped() {
   clearTimeout(typedTimer);
   typeSequence(el, typedStrings());
 }
+
+// Relance l'effet d'écriture animée
 function restartTyped() {
   clearTimeout(typedTimer);
   startTyped();
 }
 
-/* ================= Copy Email ================= */
+// Copie l'email dans le presse-papier
 const copyBtn = qs('#copyEmailBtn');
 copyBtn?.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText('yannis.oukacine@gmail.com');
     copyBtn.classList.add('copied');
     const original = copyBtn.textContent;
-    copyBtn.textContent = currentLang === 'en' ? 'Copied!' : 'Copié !';
+    copyBtn.textContent = 'Copié !';
     setTimeout(() => {
       copyBtn.textContent = original;
       copyBtn.classList.remove('copied');
     }, 1800);
   } catch (e) {
-    alert(currentLang === 'en'
-      ? 'Clipboard not available'
-      : 'Impossible de copier (clipboard)');
+    alert('Impossible de copier (clipboard)');
   }
 });
 
-/* ================= Navigation Mobile ================= */
+// Gère l'ouverture et la fermeture du menu sur mobile
 const navEl = qs('.nav');
 const navToggleBtn = qs('#navToggle');
 const navMenu = qs('#navMenu');
 
+// Ouvre le menu de navigation mobile
 function openNavMenu() {
   if (!navEl || !navMenu) return;
   navEl.classList.add('nav--open');
@@ -402,7 +390,9 @@ function openNavMenu() {
   document.body.classList.add('menu-open');
   navMenu.querySelector('a')?.focus({ preventScroll:true });
 }
-function closeNavMenu(focusToggle=false) {
+
+// Ferme le menu de navigation mobile
+function closeNavMenu(focusToggle = false) {
   if (!navEl || !navMenu) return;
   navEl.classList.remove('nav--open');
   navToggleBtn.setAttribute('aria-expanded','false');
@@ -410,6 +400,8 @@ function closeNavMenu(focusToggle=false) {
   document.body.classList.remove('menu-open');
   if (focusToggle) navToggleBtn.focus({ preventScroll:true });
 }
+
+// Alterne entre ouverture et fermeture du menu mobile
 function toggleNavMenu() {
   const expanded = navToggleBtn.getAttribute('aria-expanded') === 'true';
   expanded ? closeNavMenu(true) : openNavMenu();
@@ -439,11 +431,11 @@ if (navToggleBtn && navMenu) {
   });
 }
 
-/* ================= Initialisation ================= */
-(async function initApp() {
-  await initI18n();
+// Initialise l'application au démarrage
+(function initApp() {
+  document.documentElement.setAttribute('lang','fr');
   initTheme();
-  applyTranslations();
+  updateThemeIconAlt();
 })();
 
-/* Fin */
+// Fin du script
